@@ -1,0 +1,45 @@
+{% extends "bases.html" %}
+
+{% load static %}
+
+{% block scripts %}
+    <script src="{% static 'js/jeu.js' %}" defer></script>
+
+{% endblock scripts %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<h2 class = " col mt-4 text-center">Bienvenu {{user.username}} sur Quiz Biblique !!!!</h2>
+<div class="row">
+    <div class="col mt-4 text-center">
+        <h4>Score pour valider: {{obj.score_to_pass}}%</h4>
+    </div>
+</div>
+<div class="card container mt-3">
+    <form id = 'quiz-form' class = 'mt-3 mb-3'>
+        {% csrf_token %}
+        <h4>
+            <div class="col text-center" id="timer-box"></div>
+        </h4>
+        <div class = "col-md-12" id = 'quiz-box'></div>
+        
+    </form>
+    <form id="quiz-form1">
+        <button type="submit" class = 'btn btn-primary mt-3'>Voir le résultat</button>
+        <a href="{% url 'jeu_biblique' %}"><button type = "button" class = 'btn btn-primary mt-3'>Reset</button></a>
+    </form>
+        
+    <h3>
+        <div id = "score-box"></div>
+    </h3>
+    <h4>
+        <div id = "result-box"></div>
+    </h4>
+</div>
+{% else %}
+<h4 class = "text-center mt-4"> Ups ): Pas connecté !!! Vous n'avez pas droit à ce contenu</h4>
+<a href="{% url 'login_geead' %}"><p class = "text-center mt-4">Cliquez ici pour vous connecter :)</p></a>
+{% endif %}
+{% endblock %}
+
+
