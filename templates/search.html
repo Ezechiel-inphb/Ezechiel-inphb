@@ -1,0 +1,35 @@
+{% extends 'bases.html' %}
+
+{% block content %}
+<center><h2>Liste de recherche</h2></center>
+<div class="container">
+  <div class="row">
+    {% for article in list_article %}
+      <div class="col-12 col-md-6 col-lg-3 col-xl-3 ">
+        <div class="card">
+          {% if article.category.name == "image" %}
+            <a href="{% url 'detail' article.id %}">
+              <img class="card-img-top" src="{{article.image.url}}" style="height: 250px">
+            </a>
+          {% endif %}
+          {% if article.category.name == "vidéo" %}
+            <a href="{% url 'detail' article.id %}">
+              <video class="card-img-top" src="{{article.image.url}}" controls style="height: 250px"></video>
+            </a>
+          {% endif %}
+          <!-- Card content -->
+          <div class="card-body" style="height: 250px">
+            <!-- Title -->
+            <h4 class="card-title"><a href="{% url 'detail' article.id %}">{{article.title}}</a></h4>
+            <!-- Text -->
+            <p class="card-text">{{article.desc|truncatewords:10}}</p>
+            <p class="card-text">Publié il y a {{article.created_at|timesince}}</p>
+            <!-- Button -->
+            <a href="{% url 'detail' article.id %}" class="btn btn-primary">Lire la suite</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

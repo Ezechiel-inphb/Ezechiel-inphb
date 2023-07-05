@@ -1,0 +1,108 @@
+{% extends 'bases.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% if article.category.name == "image" %}
+        <div class="col-md-8">
+            <h1 class="text-center mt-2">Détail info</h1>
+            <img src="{{article.image.url}}" style="max-width:600px">
+            <h2>{{article.title}}</h2>
+            <p>{{article.desc}}</p>
+            {% if not article.commentes.all %}
+                <h6>Pas de commentaire</h4>
+            {% else %}
+                <div class="col-md-5">
+                    <h3 class="mt-4">Les commentaires</h3>
+                    <div class="row">
+                        {% for comment in article.commentes.all %}
+                        {% for acc in account %}
+                        {% if comment.name == acc.user.username %}
+                        <div class="col-md-7 mb-1">
+                            <img src="{{acc.image.url}}" style="max-width:80px">
+                        </div>
+                        <div class="col-14">
+                            <a href="{% url 'supprimer_commentaire' comment.pk %}"><strong style="font-weight: bold">{{comment.name}} - {{comment.date}}</strong></a> <br>
+                            <p>{{comment.content}}</p>
+                        </div>
+                        {% endif %} 
+                        {% endfor %} 
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            <a href="{% url 'ajouter_commentaire' article.pk %}"><button class="btn btn-primary">Commenter</button></a>
+        </div>
+        <div class="col-md-4">
+            <h3 class="mt-2">Les infos similaires</h3>
+            <div class="row">
+                {% for art in aer %}
+                {% if art.id != article.id %}
+                <div class="col-md-7 mb-1">
+                    <img src="{{art.image.url}}" alt="" style="max-width:210px">
+                </div>
+                <div class="col-5">
+                    <strong><a href = "{% url 'detail' art.id %}">{{art.title}}</a></strong> <br>
+                    {{art.desc|truncatewords:7}}
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% if article.category.name == "vidéo" %}
+        <div class="col-md-8">
+            <h1 class="text-center mt-2">Détail info</h1>
+            <div>
+                <video src="{{article.image.url}}" alt="" style="max-width:600px" controls></video>
+            </div>
+            <h2>{{article.title}}</h2>
+            <p>{{article.desc}}</p>
+            {% if not article.commentes.all %}
+                <h6>Pas de commentaire</h4>
+            {% else %}
+            <div class="col-md-5">
+                <h3 class="mt-4">Les commentaires</h3>
+                <div class="row mt-3">
+                    {% for comment in article.commentes.all %}
+                    {% for acc in account %}
+                    {% if comment.name == acc.user.username %}
+                    <div class="col-md-7 mb-1">
+                        <img src="{{acc.image.url}}" style="max-width:80px">
+                    </div>
+                    <div class="col-14">
+                        <a href="{% url 'supprimer_commentaire' comment.pk %}"><strong style="font-weight: bold">{{comment.name}} - {{comment.date}}</strong></a> <br>
+                        <p>{{comment.content}}</p>
+                    </div>
+                    {% endif %} 
+                    {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            <a href="{% url 'ajouter_commentaire' article.pk %}"><button class="btn btn-primary">Commenter</button></a>
+        </div>
+        <div class="col-md-4">
+            <h3 class="mt-2">Les infos similaires</h3>
+            <div class="row">
+                {% for art in aer %}
+                {% if art.id != article.id %}
+                <div class="col-md-7 mb-1">
+                    <video src="{{art.image.url}}" alt="" style="max-width:210px" controls>
+                </div>
+                <div class="col-5">
+                    <strong><a href = "{% url 'detail' art.id %}">{{art.title}}</a></strong> <br>
+                    {{art.desc|truncatewords:7}}
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+
+{% endblock %}
+

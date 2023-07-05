@@ -1,0 +1,43 @@
+{% extends 'bases.html' %}
+
+{% block content %}
+<div class="nav-bar">
+    <ul>
+        <li><a href="{% url 'Holy Challenge_2022' %}">2022</a></li>
+        <li><a href="{% url 'Holy Challenge_2023' %}">2023</a></li> 
+        <li><a href="{% url 'Holy Challenge_2024' %}" class="activate">2024</a></li>
+    </ul>
+</div>
+<div class="content">
+    <div>
+        <form class="form-inline" action="{% url 'search3' %}">
+            <div class="md-form my-0">
+              <input class="form-control mr-sm-2" type="text" placeholder="Recherche" aria-label="Search3" name="info">
+            </div>
+        </form>
+    </div>
+    <center><h2>Liste de recherche</h2></center>
+    <div class="container">
+        <div class="row">
+            {% for hl in list_holy %}
+                {% if hl.category.name == "Holy Challenge 2024" %}
+                <div class="col-12 col-md-6 col-lg-3 col-xl-3 ">
+                    <div class="card">
+                        {% if hl.categori.name == "image" %}
+                            <a href="{% url 'detail_holy_challenge' hl.pk %}"><img class="card-img-top" src="{{hl.image.url}}" style ="height: 300px"></a>
+                            <h3>{{hl.title}}</h3>
+                        {% endif %}   
+                        {% if hl.categori.name == "vidéo" %}
+                            <div>
+                                <a href="{% url 'detail_holy_challenge' hl.pk %}"><video class="card-img-top" src="{{hl.image.url}}" controls width="700" style ="height: 300px"></video></a>
+                            </div>
+                            <h3>{{hl.title}}</h3> 
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %} 
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

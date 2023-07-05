@@ -1,0 +1,18 @@
+{% extends 'bases.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+           <form action = "" method = "POST">
+                {% csrf_token %}
+                <p>Voulez vous supprimer ce commentaire ?</p>
+                <input type = "submit" value = "Supprimer" class = "btn btn-danger">
+                <a href="{% url 'home' %}" class="btn btn-secondary">Non</a>
+           </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'bases.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% if hl.categori.name == "image" %}
+        <center class="col mt-4">
+            <img src="{{hl.image.url}}">
+            <h2>{{hl.title}}</h2>
+        </center>
+        {% endif %}
+        {% if hl.categori.name == "vidéo" %}
+        <center class="col mt-4">
+            <div>
+                <video src="{{hl.image.url}}" controls></video>
+            </div>
+            <h2>{{hl.title}}</h2>
+        </center>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

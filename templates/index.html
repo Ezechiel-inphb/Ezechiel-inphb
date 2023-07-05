@@ -1,0 +1,50 @@
+{% extends 'bases.html' %}
+{% block content %}
+  {% if user.is_authenticated %}
+  <h1 class="text-center mt-3">Bienvenue sur la page GEEAD INPHB</h1>
+  <div class="container">
+    <div class="row">
+      {% for article in list_article %}
+      <div class="col-12 col-md-6 col-lg-3 col-xl-3 ">
+        <div class="card">
+          {% if article.category.name == "image" %}
+          <a href="/info/{{article.encrypt_key}}">
+          <img class="card-img-top" src="{{article.image.url}}" alt="Card image cap" style="height: 250px">
+          </a>
+          <div class="card-body" style="height: 250px">
+            <!-- Title -->
+            <h4 class="card-title"><a href="/info/{{article.encrypt_key}}">{{article.title}}</a></h4>
+            <!-- Text -->
+            <p class="card-text">{{article.desc|truncatewords:10}}</p>
+            <p class="card-text">Publié il y a {{article.created_at|timesince}}</p>
+            <!-- Button -->
+            <a href="/info/{{article.encrypt_key}}" class="btn btn-primary">Lire la suite</a>
+          </div>
+          {% else %}
+          <a href="/info/{{article.encrypt_key}}">
+            <video class="card-img-top" src="{{article.image.url}}" style="height: 250px" controls>
+          </a>
+          <div class="card-body" style="height: 250px">
+            <!-- Title -->
+            <h4 class="card-title"><a href="/info/{{article.encrypt_key}}">{{article.title}}</a></h4>
+            <!-- Text -->
+            <p class="card-text">{{article.desc|truncatewords:10}}</p>
+            <p class="card-text">Publié il y a {{article.created_at|timesince}}</p>
+            <!-- Button -->
+            <a href="/info/{{article.encrypt_key}}" class="btn btn-primary">Lire la suite</a>
+          </div>
+          {% endif %}
+        
+          
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+    </div>
+  {% else %}
+  <h4 class = "text-center mt-4"> Ups ): Pas connecté !!! Vous n'avez pas droit à ce contenu</h4>
+  <a href="{% url 'login_geead' %}"><p class = "text-center mt-4">Cliquez ici pour vous connecter :)</p></a>
+  {% endif %}
+{% endblock %}
+
